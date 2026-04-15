@@ -484,6 +484,12 @@ nav a:hover, nav a.active {
     }
 }
 
+.buys-swiper .swiper-pagination-bullet {
+    width: 12px;
+    height: 12px;
+    margin: 0 8px !important;
+}
+
 .buys-swiper .swiper-pagination-bullet-active {
     background: var(--primary-color);
 }
@@ -704,6 +710,12 @@ footer h3 {
 
 .testimonials-swiper {
     padding: 20px 0 50px !important;
+}
+
+.testimonials-swiper .swiper-pagination-bullet {
+    width: 12px;
+    height: 12px;
+    margin: 0 8px !important;
 }
 
 .testimonials-swiper .swiper-pagination-bullet-active {

@@ -34,6 +34,7 @@
     <link rel="preload" as="style" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://unpkg.com">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Oswald:wght@500;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
     <noscript><link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Oswald:wght@500;700&display=swap" rel="stylesheet"></noscript>
     <link rel="stylesheet" href="font-awesome.min.css" media="print" onload="this.media='all'">
@@ -115,6 +116,7 @@
     </header>
     <div class="overlay"></div>
 
+    <main>
     <section class="page-header" style="background: linear-gradient(rgba(11, 19, 43, 0.8), rgba(11, 19, 43, 0.8)), url('tlo.webp');">
         <div class="container">
             <h1>KONTAKT - DAWDAN-CARS</h1>
@@ -127,7 +129,7 @@
             <div class="contact-grid">
                 
                 <div class="contact-form-section" data-aos="fade-right">
-                    <h3>WYŚLIJ WIADOMOŚĆ</h3>
+                    <h2>WYŚLIJ WIADOMOŚĆ</h2>
                     <form id="contact-form" class="full-contact-form" method="post" action="send.php">
 
     <!-- 🔒 honeypot -->
@@ -166,25 +168,25 @@
 </form>
                 </div>
                 <div class="contact-details" data-aos="fade-left">
-                    <h3>DANE KONTAKTOWE</h3>
+                    <h2>DANE KONTAKTOWE</h2>
                     <div class="contact-item">
                         <i class="fas fa-map-marker-alt"></i>
                         <div>
-                            <h4>Siedziba firmy:</h4>
+                            <h3>Siedziba firmy:</h3>
                             <p>Częstochowa, Śląskie i okolice</p>
                         </div>
                     </div>
                     <div class="contact-item">
                         <i class="fas fa-phone-alt"></i>
                         <div>
-                            <h4>Skup Samochodów (24h):</h4>
+                            <h3>Skup Samochodów (24h):</h3>
                             <p>730 035 559</p>
                         </div>
                     </div>
                     <div class="contact-item">
                         <i class="fas fa-phone-alt"></i>
                         <div>
-                            <h4>Pomoc Drogowa (24h):</h4>
+                            <h3>Pomoc Drogowa (24h):</h3>
                             <p>790 676 446</p>
                         </div>
                     </div>
@@ -192,6 +194,7 @@
             </div>
         </div>
     </section>
+    </main>
 
     <footer>
         <div class="container">
@@ -222,7 +225,7 @@
     </footer>
 
     <!-- AOS JS -->
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script src="script.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js" defer></script>
+    <script src="script.js" defer></script>
 </body>
 </html>

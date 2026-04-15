@@ -193,11 +193,11 @@ if (contactForm) {
 
     // Add scroll effect to header with throttling
     let headerScrollTimeout;
+    const header = document.querySelector('header');
     window.addEventListener('scroll', () => {
         if (headerScrollTimeout) return;
         headerScrollTimeout = requestAnimationFrame(() => {
-            const header = document.querySelector('header');
-            if (window.scrollY > 50) {
+            if (window.pageYOffset > 50) {
                 header.classList.add('scrolled');
             } else {
                 header.classList.remove('scrolled');
@@ -279,7 +279,7 @@ if (contactForm) {
             if (scrollTimeout) return;
 
             scrollTimeout = requestAnimationFrame(() => {
-                AOS.refresh();
+                // AOS.refresh() triggers reflow, use it sparingly
                 const vh = window.innerHeight;
                 document.querySelectorAll('[data-aos]:not(.aos-animate)').forEach(el => {
                     const rect = el.getBoundingClientRect();

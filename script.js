@@ -223,7 +223,7 @@ if (contactForm) {
     }
 
     // Initialize Swiper for Recent Buys
-    if (document.querySelector('.buys-swiper')) {
+    if (typeof Swiper !== 'undefined' && document.querySelector('.buys-swiper')) {
         new Swiper('.buys-swiper', {
             slidesPerView: 1,
             spaceBetween: 20,
@@ -255,7 +255,7 @@ if (contactForm) {
     }
 
     // Initialize Swiper for Testimonials
-    if (document.querySelector('.testimonials-swiper')) {
+    if (typeof Swiper !== 'undefined' && document.querySelector('.testimonials-swiper')) {
         new Swiper('.testimonials-swiper', {
             slidesPerView: 1,
             spaceBetween: 30,

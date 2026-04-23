@@ -1,11 +1,13 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Mobile Menu Toggle
-    const menuToggle = document.querySelector('.menu-toggle');
+    // Optimization: Cache common selectors
+    const body = document.body;
+    const header = document.querySelector('header');
     const nav = document.querySelector('nav');
     const overlay = document.querySelector('.overlay');
+    const menuToggle = document.querySelector('.menu-toggle');
 
+    // Mobile Menu Toggle
     if (menuToggle && nav && overlay) {
-        const header = document.querySelector('header');
         const toggleMenu = () => {
             menuToggle.classList.toggle('active');
             nav.classList.toggle('active');
@@ -191,23 +193,37 @@ if (contactForm) {
         });
     });
 
-    // Add scroll effect to header with throttling
-    let headerScrollTimeout;
-    window.addEventListener('scroll', () => {
-        if (headerScrollTimeout) return;
-        headerScrollTimeout = requestAnimationFrame(() => {
-            const header = document.querySelector('header');
-            if (window.scrollY > 50) {
-                header.classList.add('scrolled');
-            } else {
-                header.classList.remove('scrolled');
-            }
-            headerScrollTimeout = null;
+    // Add scroll effect to header using IntersectionObserver to avoid scroll listener overhead
+    if (header) {
+        // Create a sentinel element to track scroll position
+        const sentinel = document.createElement('div');
+        sentinel.style.position = 'absolute';
+        sentinel.style.top = '50px';
+        sentinel.style.left = '0';
+        sentinel.style.width = '1px';
+        sentinel.style.height = '1px';
+        sentinel.style.pointerEvents = 'none';
+        sentinel.style.visibility = 'hidden';
+        document.body.prepend(sentinel);
+
+        const headerObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+            });
+        }, {
+            root: null,
+            threshold: 0
         });
-    }, { passive: true });
+
+        headerObserver.observe(sentinel);
+    }
 
     // Initialize Swiper for Recent Buys
-    if (document.querySelector('.buys-swiper')) {
+    if (typeof Swiper !== 'undefined' && document.querySelector('.buys-swiper')) {
         new Swiper('.buys-swiper', {
             slidesPerView: 1,
             spaceBetween: 20,
@@ -239,7 +255,7 @@ if (contactForm) {
     }
 
     // Initialize Swiper for Testimonials
-    if (document.querySelector('.testimonials-swiper')) {
+    if (typeof Swiper !== 'undefined' && document.querySelector('.testimonials-swiper')) {
         new Swiper('.testimonials-swiper', {
             slidesPerView: 1,
             spaceBetween: 30,
@@ -273,31 +289,20 @@ if (contactForm) {
             startEvent: 'DOMContentLoaded'
         });
 
-        // Optymalizacja wyzwalania AOS - używamy requestAnimationFrame i throttlingu
-        let scrollTimeout;
-        const triggerAOS = () => {
-            if (scrollTimeout) return;
-
-            scrollTimeout = requestAnimationFrame(() => {
-                AOS.refresh();
-                const vh = window.innerHeight;
-                document.querySelectorAll('[data-aos]:not(.aos-animate)').forEach(el => {
-                    const rect = el.getBoundingClientRect();
-                    if (rect.top < vh + 100) {
-                        el.classList.add('aos-animate');
-                    }
-                });
-                scrollTimeout = null;
+        // Optimization: Use IntersectionObserver instead of scroll-based manual check
+        const aosObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('aos-animate');
+                    aosObserver.unobserve(entry.target);
+                }
             });
-        };
+        }, {
+            rootMargin: '0px 0px 100px 0px'
+        });
 
-        window.addEventListener('load', triggerAOS);
-        window.addEventListener('scroll', triggerAOS, { passive: true });
-        window.addEventListener('touchstart', triggerAOS, { passive: true });
-
-        // Wykonaj kilka razy po załadowaniu, aby upewnić się, że wszystko jest na miejscu
-        [200, 1000].forEach(delay => {
-            setTimeout(triggerAOS, delay);
+        document.querySelectorAll('[data-aos]').forEach(el => {
+            aosObserver.observe(el);
         });
     }
 });
